@@ -1,19 +1,26 @@
 import unittest
-from main import line_checksum, file_checksum
+from main import line_checksum_min_max, line_checksum_division, file_checksum
 
 
-class TestLineChecksum(unittest.TestCase):
+class TestLineChecksumMinMax(unittest.TestCase):
     def test_easy(self):
-        self.assertEqual(line_checksum('1234'), 3)
+        self.assertEqual(line_checksum_min_max('1234'), 3)
 
     def test_samples(self):
-        self.assertEqual(line_checksum('5195'), 8)
+        self.assertEqual(line_checksum_min_max('5195'), 8)
 
     def test_decr_string(self):
-        self.assertEqual(line_checksum('753'), 4)
+        self.assertEqual(line_checksum_min_max('753'), 4)
 
     def test_incr_string(self):
-        self.assertEqual(line_checksum('2468'), 6)
+        self.assertEqual(line_checksum_min_max('2468'), 6)
+
+
+class TestLineChecksumDivision(unittest.TestCase):
+    def test_samples(self):
+        self.assertEqual(line_checksum_division('5928'), 4)
+        self.assertEqual(line_checksum_division('9473'), 3)
+        self.assertEqual(line_checksum_division('3865'), 2)
 
 
 class TestFileChecksum(unittest.TestCase):
