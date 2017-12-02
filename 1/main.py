@@ -1,10 +1,10 @@
 import sys
 
 
-def captcha(line):
+def captcha(line, jump):
     captcha_sum = 0
     for idx, ch in enumerate(line):
-        if line[idx] == line[(idx+1)%len(line)]:
+        if line[idx] == line[(idx+jump)%len(line)]:
             captcha_sum += int(line[idx])
     return captcha_sum
 
@@ -15,4 +15,4 @@ if __name__ == '__main__':
     else:
         with open(sys.argv[1]) as f:
             for line in f:
-                print(captcha(line.rstrip('\n')))
+                print(captcha(line.rstrip('\n'), 1))
