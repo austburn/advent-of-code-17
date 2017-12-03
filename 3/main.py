@@ -24,9 +24,8 @@ def determine_layer(num):
 
 
 def determine_coordinates(num):
-    x, y = 0, 0
     layer, rng = determine_layer(num)
-    idx = rng.index(num)
+    x, y = 0, -(layer-1)
     nums_per_side = int(len(rng)/4) + 1
 
     right = rng[0:nums_per_side-1]
@@ -40,7 +39,6 @@ def determine_coordinates(num):
         x = layer
     if num in left:
         x = -layer
-
     if num in top:
         y = layer
     if num in bottom:

@@ -25,9 +25,16 @@ class TestDetermineCoordinates(unittest.TestCase):
 
     def test_layer_one(self):
         self.assertEqual(determine_coordinates(2), (1, 0))
+        self.assertEqual(determine_coordinates(3), (1, 1))
+        self.assertEqual(determine_coordinates(4), (0, 1))
+        self.assertEqual(determine_coordinates(5), (-1, 1))
+        self.assertEqual(determine_coordinates(6), (-1, 0))
+        self.assertEqual(determine_coordinates(7), (-1, -1))
+        self.assertEqual(determine_coordinates(8), (0, -1))
+        self.assertEqual(determine_coordinates(9), (1, -1))
 
     def test_layer_two(self):
-        self.assertEqual(determine_coordinates(10), (2, 0))
+        self.assertEqual(determine_coordinates(10), (2, -1))
 
 if __name__ == '__main__':
     unittest.main()
