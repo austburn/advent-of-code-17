@@ -25,23 +25,27 @@ def determine_layer(num):
 
 def determine_coordinates(num):
     layer, rng = determine_layer(num)
-    x, y = 0, -(layer-1)
+    x, y = 0, 0
     nums_per_side = int(len(rng)/4) + 1
 
     right = rng[0:nums_per_side-1]
     right.append(rng[-1])
-    top_right_corner_idx = math.floor(nums_per_side/2)
+    top_right_corner_idx = nums_per_side - 2
     top = rng[top_right_corner_idx:top_right_corner_idx+nums_per_side]
-    left = rng[top_right_corner_idx+nums_per_side-1:nums_per_side*2]
+    left = rng[top_right_corner_idx+nums_per_side-1:top_right_corner_idx+(nums_per_side*2)]
     bottom = rng[top_right_corner_idx+(nums_per_side*2)-2:]
 
     if num in right:
         x = layer
+        y = -(layer-1) + right.index(num)
     if num in left:
         x = -layer
+        y = layer - left.index(num)
     if num in top:
+        x = layer - top.index(num)
         y = layer
     if num in bottom:
+        x = -layer + bottom.index(num)
         y = -layer
 
     return x, y
