@@ -15,7 +15,8 @@ def determine_layer(num):
     while num not in layer_range:
         nums_per_side = int(len(layer_range)/4) + 1
         nums_in_next_layer = (nums_per_side * 4) + 4
-        layer_range = range(layer_range[-1], nums_in_next_layer)
+        # add one as stop is not included in range
+        layer_range = range(layer_range[-1], layer_range[-1]+nums_in_next_layer+1)
         current_layer += 1
     return current_layer
 
