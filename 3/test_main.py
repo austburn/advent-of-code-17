@@ -1,5 +1,5 @@
 import unittest
-from main import determine_layer, determine_coordinates
+from main import determine_layer, determine_coordinates, taxicab_distance
 
 
 class TestDetermineLayer(unittest.TestCase):
@@ -50,6 +50,21 @@ class TestDetermineCoordinates(unittest.TestCase):
         self.assertEqual(determine_coordinates(23), (0, -2))
         self.assertEqual(determine_coordinates(24), (1, -2))
         self.assertEqual(determine_coordinates(25), (2, -2))
+
+
+class TestTaxicabDistance(unittest.TestCase):
+    def test_origin(self):
+        self.assertEqual(taxicab_distance(1), 0)
+
+    def test_level_one_sample(self):
+        self.assertEqual(taxicab_distance(12), 3)
+
+    def test_level_two_sample(self):
+        self.assertEqual(taxicab_distance(23), 2)
+
+    def test_large_sample(self):
+        self.assertEqual(taxicab_distance(1024), 31)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,3 +1,4 @@
+import sys
 import math
 
 # 17  16  15  14  13
@@ -51,9 +52,14 @@ def determine_coordinates(num):
     return x, y
 
 
+def taxicab_distance(num):
+    dest_x, dest_y = determine_coordinates(num)
+    return math.fabs(dest_x) + math.fabs(dest_y)
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Usage:')
         print('\tpython main.py 1234')
     else:
-        print(determine_layer(int(sys.argv[1])))
+        print(taxicab_distance(int(sys.argv[1])))
