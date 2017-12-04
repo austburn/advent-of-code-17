@@ -9,8 +9,8 @@ do
     if [[ $num_phrases -gt 1 ]]; then
         num_duplicates=$(echo $line | sed 's/\(\s\)/\n/g' | sort | uniq -d | wc -l)
         if [[ $num_duplicates -eq 0 ]]; then
-            VALID_PASSWORDS=$((VALID_PASSWORDS+1));echo $VALID_PASSWORDS
-            echo "Valid password!"
+            VALID_PASSWORDS=$((VALID_PASSWORDS+1));
+            echo -e "\tValid password!"
         fi
     fi
 done < $1
