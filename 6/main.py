@@ -10,6 +10,19 @@ def realloc_memory(cores):
         cores[(start_idx+x+1)%len(cores)] += 1
     return cores
 
+
+def track_states(cores):
+    state = realloc_memory(cores)
+    hash_redux = lambda a, b: str(a) + str(b)
+    hashes = []
+    current_hash = reduce(hash_redux, state)
+    while current_hash not in hashes:
+        hashes.append(current_hash)
+        state = realloc_memory(state)
+        current_hash = reduce(hash_redux, state)
+    return len(hashes) + 1
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Usage:')
@@ -18,4 +31,4 @@ if __name__ == '__main__':
         with open(sys.argv[1]) as f:
             cores = [int(val) for val in f.readlines()[0].split()]
             print(cores)
-            print(realloc_memory(cores))
+            print(track_states(cores))
