@@ -7,7 +7,7 @@ class TestReallocMemory(unittest.TestCase):
         self.assertEqual(realloc_memory([0, 2, 7, 0]), [2, 4, 1, 2])
 
     def test_sample_state_tracking(self):
-        self.assertEqual(track_states([0, 2, 7, 0]), 5)
+        self.assertEqual(track_states([0, 2, 7, 0]), (5, 4))
 
 
 if __name__ == '__main__':

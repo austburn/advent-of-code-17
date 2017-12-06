@@ -20,7 +20,8 @@ def track_states(cores):
         hashes.append(current_hash)
         state = realloc_memory(state)
         current_hash = reduce(hash_redux, state)
-    return len(hashes) + 1
+
+    return len(hashes) + 1, len(hashes) - hashes.index(current_hash)
 
 
 if __name__ == '__main__':
