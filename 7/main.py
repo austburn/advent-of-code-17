@@ -11,7 +11,18 @@ def parse_program(program):
     program_dict = rgx.match(program).groupdict()
     if program_dict['programs'] is not None:
         program_dict['programs'] = [p.strip() for p in program_dict['programs'].split(',')]
+    else:
+        program_dict['programs'] = []
     return program_dict
+
+
+def _determine_chain_length(name, programs, depth=0):
+    next_layer_programs = programs[name]['programs']
+    if len(next_layer_programs) == 0:
+        return depth
+    else:
+        return max([_determine_chain_length(n, programs, depth=depth+1) for n in next_layer_programs])
+
 
 
 if __name__ == '__main__':
@@ -20,4 +31,6 @@ if __name__ == '__main__':
         print('\tpython main.py input.txt')
     else:
         with open(sys.argv[1]) as f:
-            print('yay')
+            programs = [parse_program(p.rstrip('\n')) for p in f.readlines()]
+            program_map = {p['name']: p for p in programs}
+            import pdb;pdb.set_trace()
