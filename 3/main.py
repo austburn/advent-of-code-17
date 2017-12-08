@@ -57,9 +57,30 @@ def taxicab_distance(num):
     return math.fabs(dest_x) + math.fabs(dest_y)
 
 
+def build_grid():
+    grid = [[1]]
+    current_layer = 0
+    layer_capacity = 1
+    while current_layer != 2:
+        if len(grid[current_layer]) == layer_capacity:
+            layer_capacity =  ((int(len(grid[current_layer])/4) + 1) * 4) + 4
+            current_layer += 1
+            grid.append([])
+        if len(grid[current_layer]) == 0:
+            grid[current_layer].append(grid[current_layer-1][0])
+            if len(grid[current_layer-1]) > 1:
+                grid[current_layer][0] += grid[current_layer-1][0-1]
+        else:
+            grid[current_layer].append(sum(grid[current_layer]))
+
+    return grid
+
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Usage:')
         print('\tpython main.py 1234')
     else:
         print(taxicab_distance(int(sys.argv[1])))
+        print(build_grid())
