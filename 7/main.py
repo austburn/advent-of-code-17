@@ -24,6 +24,13 @@ def _determine_chain_length(name, programs, depth=0):
         return max([_determine_chain_length(n, programs, depth=depth+1) for n in next_layer_programs])
 
 
+def determine_tree_root(program_map):
+    lengths = []
+    for name, program in program_map.items():
+        lengths.append((name, _determine_chain_length(name, program_map)))
+
+    return max(lengths, key=lambda x: x[1])
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -33,4 +40,5 @@ if __name__ == '__main__':
         with open(sys.argv[1]) as f:
             programs = [parse_program(p.rstrip('\n')) for p in f.readlines()]
             program_map = {p['name']: p for p in programs}
-            import pdb;pdb.set_trace()
+
+            print(determine_tree_root(program_map))

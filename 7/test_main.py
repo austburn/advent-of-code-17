@@ -1,5 +1,5 @@
 import unittest
-from main import parse_program, _determine_chain_length
+from main import parse_program, _determine_chain_length, determine_tree_root
 
 
 class TestParseProgram(unittest.TestCase):
@@ -80,6 +80,8 @@ class TestParseProgram(unittest.TestCase):
         self.assertEqual(_determine_chain_length('jptl', programs), 0)
         self.assertEqual(_determine_chain_length('ugml', programs), 1)
         self.assertEqual(_determine_chain_length('tknk', programs), 2)
+
+        self.assertEqual(determine_tree_root(programs), ('tknk', 2))
 
 
 if __name__ == '__main__':
