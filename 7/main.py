@@ -1,5 +1,6 @@
 import sys
 import re
+from collections import Counter
 # pbga (66)
 # xhth (57)
 # ebii (61)
@@ -22,6 +23,20 @@ def _determine_chain_length(name, programs, depth=0):
         return depth
     else:
         return max([_determine_chain_length(n, programs, depth=depth+1) for n in next_layer_programs])
+
+
+def _determine_imbalance(name, programs, weight=0):
+    next_layer_programs = programs[name]['programs']
+    if len(next_layer_programs) == 0:
+        return (name, weight)
+    else:
+        weights = Coutner([_determine_weight(n, programs, weight=weight+programs[name]['programs']) for n in next_layer_programs])
+        imbalance = list(filter(lambda a, b: b == 1, weights.items()))
+        return _determine_imbalance(imbalance[0], programs, weight=imbalance[1])
+
+
+def determine_weight(name, programs):
+
 
 
 def determine_tree_root(program_map):
