@@ -46,7 +46,7 @@ class TestMain(unittest.TestCase):
             'c dec -10 if a >= 1',
             'c inc -20 if c == 10'
         ]
-        self.assertEqual(run_instruction_set(instructions), ('a', 1))
+        self.assertEqual(run_instruction_set(instructions), (('a', 1), ('c', 10)))
 
 
 if __name__ == '__main__':

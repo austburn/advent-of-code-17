@@ -31,6 +31,7 @@ def parse_instruction(instruction):
 
 def run_instruction_set(instructions):
     registers = {}
+    max_value = ('', 0)
     for instruction in instructions:
         parsed_instruction = parse_instruction(instruction)
         dest_reg = parsed_instruction['register']
@@ -41,7 +42,9 @@ def run_instruction_set(instructions):
             registers[op_reg] = 0
         if OPERATIONS[parsed_instruction['condition']['operation']](registers[op_reg], parsed_instruction['condition']['value']):
             registers[dest_reg] = OPERATIONS[parsed_instruction['operation']](registers[dest_reg], parsed_instruction['value'])
-    return max(registers.items(), key=lambda x: x[1])
+            if registers[dest_reg] > max_value[1]:
+                max_value = (dest_reg, registers[dest_reg])
+    return max(registers.items(), key=lambda x: x[1]), max_value
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
