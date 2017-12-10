@@ -15,7 +15,7 @@ OPERATIONS = {
 
 
 def parse_instruction(instruction):
-    rgx = re.compile('(?P<register>\w) (?P<operation>(inc|dec)) (?P<value>\-?\d+) if (?P<condition_register>\w) (?P<condition_operator>[<>!=]+) (?P<condition_value>\-?\d+)')
+    rgx = re.compile('(?P<register>\w+) (?P<operation>(inc|dec)) (?P<value>\-?\d+) if (?P<condition_register>\w+) (?P<condition_operator>[<>!=]+) (?P<condition_value>\-?\d+)')
     match_dict = rgx.match(instruction).groupdict()
     return {
         'register': match_dict['register'],
@@ -49,4 +49,4 @@ if __name__ == '__main__':
         print('\tpython main.py input.txt')
     else:
         with open(sys.argv[1]) as f:
-            run_instruction_set([f.rstrip('\n') for f in f.readlines()])
+            print(run_instruction_set([f.rstrip('\n') for f in f.readlines()]))
