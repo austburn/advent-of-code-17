@@ -10,7 +10,7 @@ class TestMain(unittest.TestCase):
             'value': 5,
             'condition': {
                 'register': 'a',
-                'comparison': '>',
+                'operation': '>',
                 'value': 1
             }
         })
