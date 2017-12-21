@@ -2,129 +2,45 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	"math"
 )
 
-type Node struct {
-	Value int
-	Next  *Node
+func initList(n int) []int {
+	l := make([]int, n)
+	for i := 0; i < n; i++ {
+		l[i] = i
+	}
+	return l
 }
 
-func initList(nodes int) Node {
-	n := Node{Value: 0}
-	currentNode := &n
-	for i := 1; i <= nodes-1; i++ {
-		next := Node{Value: i}
-		currentNode.Next = &next
-		currentNode = &next
+func reverse(l []int, s int, n int) []int {
+	j := s
+	length := len(l)
+	numSwaps := int(math.Ceil(float64(n) / 2))
+	for i := 0; i < numSwaps; i++ {
+		// start + number of swaps, moving it backwards by the current swap iteration (i) - 1
+		tailPos := s + n - i - 1
+		a := l[tailPos%length]
+		b := l[j%length]
+		l[tailPos%length] = b
+		l[j%length] = a
+		j++
 	}
-	currentNode.Next = &n
-	return n
+	return l
 }
 
-func (n Node) Len() int {
-	nPtr := &n
-	firstVal := n.Value
-	length := 1
-	for nPtr.Next != nil {
-		nPtr = nPtr.Next
-		if nPtr.Value == firstVal {
-			break
-		}
-		length++
+func hash(l []int, t []int) []int {
+	start := 0
+	for i, val := range t {
+		l = reverse(l, start, val)
+		start = (val + i + start) % len(l)
 	}
-	return length
-}
-
-func (n Node) Reverse() Node {
-	nPtr := &n
-	rev := &Node{Value: nPtr.Value}
-	for nPtr.Next != nil {
-		rev = &Node{Value: nPtr.Next.Value, Next: rev}
-		nPtr = nPtr.Next
-	}
-	return *rev
-}
-
-func (n Node) String() string {
-	nPtr := &n
-	firstVal := n.Value
-	s := "["
-	for nPtr != nil {
-		s += strconv.Itoa(nPtr.Value)
-		nPtr = nPtr.Next
-
-		if nPtr != nil {
-			if nPtr.Value != firstVal {
-				s += ", "
-			} else {
-				break
-			}
-		}
-	}
-	s += "]"
-	return s
-}
-
-func (n Node) Split(nodes int) (Node, Node) {
-	nPtr := &n
-	n1 := Node{Value: nPtr.Value}
-	currentNode := &n1
-	for i := 0; i < nodes-1 && nPtr.Next != nil; i++ {
-		nPtr = nPtr.Next
-		currentNode.Next = &Node{Value: nPtr.Value}
-		currentNode = currentNode.Next
-	}
-	currentNode.Next = nil
-
-	if nPtr.Next != nil {
-		nPtr = nPtr.Next
-	} else {
-		return n1, Node{}
-	}
-
-	n2 := Node{Value: nPtr.Value}
-	currentNode = &n2
-	for j := 0; j < n.Len()-nodes-1 && nPtr.Next != nil && nPtr.Next != &n; j++ {
-		nPtr = nPtr.Next
-		currentNode.Next = &Node{Value: nPtr.Value}
-		currentNode = currentNode.Next
-	}
-	currentNode.Next = nil
-	return n1, n2
-}
-
-func Append(n Node, o Node) Node {
-	newNode := Node{Value: n.Value}
-	currentNode := &newNode
-	nPtr := &n
-	for nPtr.Next != nil {
-		nPtr = nPtr.Next
-		next := Node{Value: nPtr.Value}
-		currentNode.Next = &next
-		currentNode = &next
-	}
-
-	oPtr := &o
-	for oPtr.Next != nil {
-		next := Node{Value: oPtr.Value}
-		currentNode.Next = &next
-		currentNode = &next
-		oPtr = oPtr.Next
-	}
-	currentNode.Next = &Node{Value: oPtr.Value, Next: &n}
-
-	return newNode
-}
-
-func KnotHash(n Node, l int) Node {
-	chunk, rem := n.Split(l)
-	rev := chunk.Reverse()
-	hashed := Append(rev, rem)
-	return hashed
+	return l
 }
 
 func main() {
-	l := initList(10)
-	fmt.Printf("%s", l)
+	l := initList(256)
+	trans := []int{120, 93, 0, 90, 5, 80, 129, 74, 1, 165, 204, 255, 254, 2, 50, 113}
+	l = hash(l, trans)
+	fmt.Printf("%v", l)
 }
